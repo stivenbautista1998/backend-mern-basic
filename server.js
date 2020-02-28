@@ -1,6 +1,10 @@
 require('dotenv').config()
+
+// Config of all the app
 const app = require('./app')
+// return a fuction to connect mongodb database
 const connectDB = require('./db/mongodb')
+// private keys of config
 const { appConfig, dbConfig } = require('./config')
 
 // Conect to MongoDB
