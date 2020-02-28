@@ -1,14 +1,17 @@
 require('dotenv').config()
-
-const express = require('express')
+const app = require('./app')
 const connectDB = require('./db/mongodb')
-const { appConfig, db } = require('./config')
+const { appConfig, dbConfig } = require('./config')
 
-const bodyParser = require('body-parser')
-const app = express()
+// Conect to MongoDB
+async function startApp(appConfig, dbConfig) {
+    try {
+        await connectDB(dbConfig)
+        app.listen(appConfig.port, () => console.log(`server stared on port ${appConfig.port}`))    
+    } catch (err) {
+        console.error(err)
+        process.exit(0) //Salir (cerrar) de la app
+    }
+}
 
-// bodyparser Middleware
-app.use(bodyParser.json())
-
-connectDB(db)
-app.listen(appConfig.port, () => console.log(`server on port ${appConfig.port}`))
+startApp(appConfig, dbConfig)
