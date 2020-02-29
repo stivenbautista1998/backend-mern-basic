@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { appConfig } = require('../config')
 
 const ProductsSchema = Schema({
     name: String,
@@ -10,5 +11,10 @@ const ProductsSchema = Schema({
 }, {
     timestamps: true
 })
+
+ProductsSchema.methods.setImgUrl = function setImgUrl(namefile) {
+    const { host, port } = appConfig
+    this.imgUrl = `${host}:${port}/public/${namefile}`
+}
 
 module.exports = mongoose.model('Products', ProductsSchema)

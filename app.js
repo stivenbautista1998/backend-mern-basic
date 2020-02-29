@@ -8,6 +8,9 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+// __dirname = It gives you the path of the currently running file
+app.use('/public', express.static(`${__dirname}/storage/imgs`))
+
 // create API
 app.use('/v1', productsRoutes)
 

@@ -9,6 +9,12 @@ async function addProduct (req, res) {
             description, 
             size
         })
+
+        if(req.file) {  // if there is eny image in the request
+            const { filename } = req.file
+            product.setImgUrl(filename)
+        }
+        
         const productStored = await product.save()
         res.status(201).send({ productStored })    
     } catch (err) {
