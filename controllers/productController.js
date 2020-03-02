@@ -22,6 +22,12 @@ async function addProduct (req, res) {
     }
 }
 
+async function getProducts(req, res) {
+    const products = await Products.find().lean().exec()
+    res.status(200).send({ products })
+}
+
 module.exports = {
-    addProduct
+    addProduct,
+    getProducts
 }
