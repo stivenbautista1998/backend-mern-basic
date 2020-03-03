@@ -16,9 +16,9 @@ async function addProduct (req, res) {
         }
         
         const productStored = await product.save()
-        res.status(201).send({ productStored })    
+        res.status(200).send({ productStored })    
     } catch (err) {
-        res.status(500).send({ failed: err.message })
+        res.status(404).send({ failed: err.message })
     }
 }
 
@@ -27,7 +27,14 @@ async function getProducts(req, res) {
     res.status(200).send({ products })
 }
 
+function deleteProduct(req, res) {
+    Products.findById(req.params.id).then((product) => product.remove()
+        .then(() => res.status(200).send({ success: true })))
+        .catch(() => res.status(404).send({ success: false }))
+}
+
 module.exports = {
     addProduct,
-    getProducts
+    getProducts,
+    deleteProduct
 }
